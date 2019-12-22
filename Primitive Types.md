@@ -133,9 +133,9 @@ quotient: quotient + 1 x 2<sup>0</sup> = (100)<sub>2</sub> + (1)<sub>2</sub> = (
 
 
 # Question 7
-Compute x<sup>y</sup>
+Compute a<sup>b</sup>
 
-假設x是double，y是integer
+假設a是double，b是integer
 
 
 *Hint: 指數的特性*
@@ -153,4 +153,122 @@ a<sup>3</sup> = a<sup>2</sup> x a
 時間複雜度: O(2<sup>n</sup>)
 
 ## Solution 7-2
+一次不止乘上一個a，減少相乘次數
+
+**Example: **
+
+1.1<sup>20</sup>  = 1.21<sup>10</sup>
+
+
+> 如果b的least significant bit = 0，可以把a拆成(a<sup>2</sup>)<sup>y/2</sup>，也就是a<sup>y/2</sup> x a<sup>y/2</sup>
+如果b的least significant bit = 1，可以把a拆成a x (a<sup>2</sup>)<sup>y/2</sup>
+
+
+**Example:**
+
+a<sup>(1010)<sub>2</sub></sup> = a<sup>(101)<sub>2</sub></sup> x  a<sup>(101)<sub>2</sub></sup>,
+
+a<sup>(101)<sub>2</sub></sup> = a x a<sup>(100)<sub>2</sub></sup> = a x a<sup>(10)<sub>2</sub></sup> x a<sup>(10)<sub>2</sub></sup>
+
+
+時間複雜度: O(n)，at most twice the index of most significant bit 
+
+# Question 8
+reverse digits
+
+假設x是integer 123，回傳321，如果是-123，則回傳-321
+
+
+Hint: 如果是reverse string, how to solve?
+
+## Solution 8-1
+暴力法
+
+轉換intger to string，traverse te string from back to front
+
+## Solution 8-2
+不用轉換為string，透過modulo 10取最小位數
+
+時間複雜度: O(n)，n是digit個數
+
+# Question 9
+Check if a decimal integer x is a palindrome
+
+符合，e.g. 0, 1, 7, 121, 333, 123321...
+
+不符合，e.g. -1, 12, 100...
+
+*Hint: 找到least significant digit很容易，但如何找到most significant digit?*
+
+
+## Solution 9-1
+暴力法
+
+轉換intger to string，依序比較最小及最大digit相不相同，一旦發現不同就回傳false
+
+時間複雜度: O(n)，n是digit個數
+
+## Solution 9-2
+不轉換為string，找到number中的most significant digit
+
+而most significant digit n = floor(log<sub>10</sub>x) + 1
+
+**Example: **
+
+100的most significant digit = floor(log<sub>10</sub>100) + 1 = 2 + 1 = 3
+
+> least significant digit: x mod 10
+most significant digit: x/10<sup>n-1</sup>
+
+*時間複雜度: O(n)
+空間複雜度: O(1)*
+
+
+# Question 10
+Generate uniform random numbers
+
+現有一個公平挑出0 和 1 的generator ，利用它製造出一個generator可以在integer a 跟 b 之間公平的挑出integer i
+
+## Solution 10-1
+把現有一個公平挑出0 和 1 的generator想像成一個bit
+
+看要處理的範圍 b - a，至少需要用多少個bit來表示
+
+Example:
+
+直骰子，1~6 隨機挑出一個數字
+
+2<sup>2</sup>-1 < 6-1 <= 2<sup>3</sup>-1
+
+所以至少需要3個bit來表示所有數字，分別是
+
+(000)<sub>2</sub>, (001)<sub>2</sub>, (010)<sub>2</sub>, (011)<sub>2</sub>, (100)<sub>2</sub>, (101)<sub>2</sub>
+
+如果random數字是(111)<sub>2</sub>, (110)<sub>2</sub>，則每個bit再重新random一次
+
+*時間複雜度: *
+
+# Question 11
+Rectangle intersection
+
+在一個x-y二為的座標系中，有若干個長方形，且邊都平行於座標軸
+
+試問某兩個長方形R<sub>1</sub>和R<sub>2</sub>是否有相交，回傳相交的範圍
+
+(只要有共同邊，共同頂點，也算相交)
+
+*Hint: x, y座標分別處理*
+
+## Solution 11-1
+
+相交的情形有很多種，反向思考，兩個長方形是否不相交？
+
+> 分別看x, y 軸，
+chek if 
+R<sub>1</sub>的左下角頂點座標 + R<sub>1</sub> x軸邊長後 >＝ R<sub>2</sub>的左下角頂點座標 
+且
+R<sub>2</sub>的左下角頂點座標 + R<sub>2</sub> x軸邊長後 >＝ R<sub>1</sub>的左下角頂點座標 
+
+*時間複雜度: O(n)*
+
 
